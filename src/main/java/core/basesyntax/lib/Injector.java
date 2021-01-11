@@ -1,5 +1,8 @@
 package core.basesyntax.lib;
 
+import core.basesyntax.dao.BetDao;
+import core.basesyntax.dao.UserDao;
+import core.basesyntax.exception.DaoException;
 import core.basesyntax.factory.Factory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -14,9 +17,20 @@ public class Injector {
         Field[] declaredField = clazz.getDeclaredFields();
 
         for (Field field : declaredField) {
-            if (field.getAnnotation(Inject.class) != null) {
+            if (field.isAnnotationPresent(Inject.class)) {
                 field.setAccessible(true);
-                field.set(instance, Factory.getBetDao());
+                Object objectDao = new Object();
+                if (field.getType() == BetDao.class) {
+                    objectDao = Factory.getBetDao();
+                } else if (field.getType() == UserDao.class) {
+                    objectDao = Factory.getUserDao();
+                }
+                if (objectDao.getClass().isAnnotationPresent(Dao.class)) {
+                    field.set(instance, objectDao);
+                } else {
+                    throw new DaoException("@Dao doesn't exist in class"
+                            + objectDao.getClass());
+                }
             }
         }
         return instance;
