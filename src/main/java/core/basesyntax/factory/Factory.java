@@ -6,6 +6,7 @@ import core.basesyntax.dao.UserDao;
 import core.basesyntax.dao.UserDaoImpl;
 
 public class Factory {
+
     private static BetDao betDao;
     private static UserDao userDao;
 

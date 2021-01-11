@@ -7,7 +7,6 @@ import core.basesyntax.model.Bet;
 import java.util.Scanner;
 
 public class ConsoleHandler {
-
     @Inject
     private BetDao betDao;
     @Inject
