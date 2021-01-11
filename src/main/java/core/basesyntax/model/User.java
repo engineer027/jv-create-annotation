@@ -1,7 +1,6 @@
 package core.basesyntax.model;
 
 public class User {
-
     private String name;
     private Integer age;
 
