@@ -25,7 +25,7 @@ public class Injector {
                 } else if (field.getType() == UserDao.class) {
                     objectDao = Factory.getUserDao();
                 }
-                if (objectDao.getClass().isAnnotationPresent(Dao.class)) {
+                if (objectDao != null && objectDao.getClass().isAnnotationPresent(Dao.class)) {
                     field.set(instance, objectDao);
                 } else {
                     throw new DaoException("@Dao doesn't exist in class"
